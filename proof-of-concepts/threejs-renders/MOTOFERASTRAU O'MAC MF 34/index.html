@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Piese MF 34</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three/build/three.module.js",
+        "three/addons/": "./vendor/three/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="app.js"></script>
+  <script>
+    // Din file:// modulele ES nu pornesc: explicăm cum se deschide corect.
+    // Prin server, mesajul apare doar dacă pagina tot nu e gata după 6 s, și dispare când devine gata.
+    (function () {
+      var ready = function () { return window.__mf34 && window.__mf34.ready; };
+      function show(text) {
+        var box = document.getElementById('boot-error');
+        if (!box || ready()) return;
+        box.innerHTML = text;
+        box.hidden = false;
+        var timer = setInterval(function () {
+          if (ready()) { box.hidden = true; clearInterval(timer); }
+        }, 250);
+      }
+      if (location.protocol === 'file:') {
+        document.addEventListener('DOMContentLoaded', function () {
+          show('Pagina trebuie deschisă printr-un server local: în acest folder rulați <code>python3 -m http.server</code> și deschideți <code>http://localhost:8000</code>.');
+        });
+      } else {
+        setTimeout(function () { show('Pagina încă se încarcă. Dacă nu pornește, reîncărcați-o.'); }, 6000);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <p id="boot-error" class="boot-error" role="alert" hidden></p>
+
+  <header class="antet">
+    <nav class="breadcrumb" aria-label="Firimituri">
+      <ol>
+        <li>Acasă</li>
+        <li>Piese de schimb</li>
+        <li>Piese motoferăstraie</li>
+        <li aria-current="page">Motoferăstrău O’MAC MF 34</li>
+      </ol>
+    </nav>
+    <h1 class="titlu">Piese MF 34</h1>
+    <p class="intro">Apasă un număr pe desen și îți spune ce piesă e. Sau invers: treci peste un rând din listă și ți-l arată pe desen. Schimbă ansamblul din lista de sus.</p>
+  </header>
+
+  <main>
+    <section class="fisa" aria-label="Utilajul">
+      <img src="assets/motoferastrau_o_mac_mf_34__1__jpg.webp" width="1633" height="1199"
+           alt="Motoferăstrăul O’MAC MF 34 văzut din față-stânga: capac portocaliu, corp gri închis, mâner frontal și șină de 40 cm">
+      <div>
+        <p class="fisa-nume" data-model-name></p>
+        <dl class="fisa-specs" data-specs></dl>
+        <p class="fisa-numar" data-count></p>
+      </div>
+    </section>
+
+    <p class="nota"><strong>Proof of concept.</strong> Denumirile pieselor provin din lista de piese a fabricantului, traduse provizoriu; codurile și prețurile nu sunt încă disponibile.</p>
+
+    <section class="spatiu" aria-label="Schema explodată">
+      <div id="viewer" class="viewer" aria-label="Desenul 3D al utilajului"></div>
+      <div class="panou-piese">
+        <label class="eticheta" for="assembly">Ansamblu</label>
+        <select id="assembly"></select>
+        <button id="explode" class="buton" type="button" aria-pressed="false">Vezi piesele</button>
+        <ol id="parts" class="lista" aria-label="Pozițiile ansamblului"></ol>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,341 @@
+/* Valorile de brand, ca variabile (înlocuitor pentru brand.css-ul clientului).
+   Nicio culoare sau dimensiune nu se scrie în afara acestui bloc.
+   Pragul de 900 px din @media nu poate fi variabilă: e pragul din caietul de sarcini. */
+:root {
+  color-scheme: light;
+
+  --c-gri: #53565A;
+  --c-portocaliu: #FF824B;
+  --c-portocaliu-text: #A8481F;
+  --c-alb: #FFFFFF;
+  --c-g1: #757A80;
+  --c-g2: #909499;
+  --c-g3: #ABAEB3;
+  --c-g4: #C4C7CC;
+  --c-g5: #DFE1E6;
+  --c-g6: #EBEDF0;
+  --c-panou: #F2F2F3;
+
+  --t7: 7px; --t9: 9px; --t10: 10px; --t12: 12px; --t15: 15px; --t18: 18px;
+  --t22: 22px; --t26: 26px; --t32: 32px; --t38: 38px; --t46: 46px; --t54: 54px;
+  --t66: 66px; --t78: 78px; --t94: 94px; --t114: 114px; --t136: 136px;
+
+  --lh-titlu: 1.05;
+  --lh-subtitlu: 1.2;
+  --lh-corp: 1.3;
+
+  /* Fișierele de font nu au fost livrate: titlurile cad pe un condensat de sistem,
+     corpul pe Arial (alternativa din manualul de brand). */
+  --f-titlu: "Pressio Condensed", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
+  --f-corp: "Proxima Nova", Arial, Helvetica, sans-serif;
+
+  --linie: 1px;
+  --contur-focus: 3px;
+  --latime-pagina: 1180px;
+  --inaltime-viewer: calc(var(--t136) * 4.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--c-alb);
+  color: var(--c-gri);
+  font: var(--t15) / var(--lh-corp) var(--f-corp);
+  text-align: left;
+}
+
+:focus-visible {
+  outline: var(--contur-focus) solid var(--c-portocaliu-text);
+  outline-offset: calc(var(--linie) * 2);
+}
+
+.antet,
+main {
+  max-width: var(--latime-pagina);
+  margin: 0 auto;
+  padding: 0 var(--t22);
+}
+
+.antet { padding-top: var(--t32); }
+
+.breadcrumb ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--t7);
+  font-size: var(--t12);
+  color: var(--c-gri);
+}
+
+.breadcrumb li + li::before {
+  content: "/";
+  margin-right: var(--t7);
+}
+
+.titlu {
+  font-family: var(--f-titlu);
+  font-stretch: condensed;
+  font-weight: 700;
+  font-feature-settings: "ss01" 1, "case" 1;
+  text-transform: uppercase;
+  font-size: var(--t54);
+  line-height: var(--lh-titlu);
+  margin: var(--t18) 0 var(--t12);
+}
+
+.intro {
+  font-size: var(--t18);
+  max-width: calc(var(--t54) * 10);
+  margin: 0 0 var(--t26);
+  padding-bottom: var(--t26);
+  border-bottom: var(--linie) solid var(--c-gri);
+}
+
+.fisa {
+  display: grid;
+  grid-template-columns: calc(var(--t114) * 2) minmax(0, 1fr);
+  gap: var(--t26);
+  align-items: center;
+  border: var(--linie) solid var(--c-g5);
+  padding: var(--t18);
+}
+
+.fisa img {
+  width: 100%;
+  max-width: calc(var(--t114) * 2);
+  height: auto;
+  background: var(--c-panou);
+}
+
+.fisa-nume {
+  font-family: var(--f-titlu);
+  font-stretch: condensed;
+  font-weight: 700;
+  font-size: var(--t22);
+  line-height: var(--lh-subtitlu);
+  margin: 0 0 var(--t12);
+}
+
+.fisa-specs {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: var(--t7) var(--t18);
+  margin: 0 0 var(--t12);
+}
+
+.fisa-specs dt { color: var(--c-gri); }
+.fisa-specs dd { margin: 0; font-weight: 700; }
+.fisa-numar { margin: 0; font-weight: 700; }
+
+.nota {
+  background: var(--c-panou);
+  border-left: var(--t7) solid var(--c-portocaliu);
+  padding: var(--t15) var(--t18);
+  margin: var(--t26) 0;
+}
+
+.spatiu {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: var(--t26);
+  margin-bottom: var(--t54);
+}
+
+.viewer {
+  position: relative;
+  height: var(--inaltime-viewer);
+  border: var(--linie) solid var(--c-g5);
+  background: var(--c-panou);
+  overflow: hidden;
+}
+
+.viewer canvas { display: block; }
+
+.labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.marker-slot {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+/* Linia de la piesă la etichetă; lungimea și unghiul le pune app.js. */
+.leader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: calc(var(--linie) * 2);
+  background: var(--c-portocaliu);
+  transform-origin: 0 50%;
+  pointer-events: none;
+}
+
+.marker {
+  position: absolute;
+  pointer-events: auto;
+  width: var(--t46);
+  height: var(--t46);
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font: 700 var(--t15) / var(--lh-titlu) var(--f-corp);
+  color: var(--c-portocaliu-text);
+}
+
+/* Etichete de 2–3 caractere (A5, B48): pastilă care se lărgește după text. */
+.marker .cerc {
+  display: grid;
+  place-items: center;
+  min-width: var(--t26);
+  height: var(--t26);
+  padding: 0 var(--t7);
+  border-radius: var(--t15);
+  font-size: var(--t12);
+  white-space: nowrap;
+  background: var(--c-alb);
+  border: calc(var(--linie) * 2) solid var(--c-portocaliu);
+}
+
+.marker:hover .cerc,
+.marker.is-highlighted .cerc {
+  background: var(--c-portocaliu-text);
+  border-color: var(--c-portocaliu-text);
+  color: var(--c-alb);
+}
+
+.panou-piese {
+  display: flex;
+  flex-direction: column;
+  gap: var(--t12);
+  min-height: 0;
+  max-height: var(--inaltime-viewer);
+}
+
+.eticheta {
+  font-size: var(--t12);
+  color: var(--c-gri);
+  text-transform: uppercase;
+}
+
+select,
+.buton {
+  min-height: var(--t46);
+  font: inherit;
+}
+
+select {
+  width: 100%;
+  border: var(--linie) solid var(--c-g3);
+  background: var(--c-alb);
+  color: var(--c-gri);
+  padding: 0 var(--t12);
+}
+
+.buton {
+  border: 0;
+  background: var(--c-gri);
+  color: var(--c-alb);
+  font-family: var(--f-titlu);
+  font-stretch: condensed;
+  font-weight: 700;
+  font-size: var(--t15);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0 var(--t22);
+  cursor: pointer;
+}
+
+.buton:hover { background: var(--c-portocaliu-text); }
+.buton:active { transform: translateY(var(--linie)); }
+.buton:disabled { background: var(--c-g4); color: var(--c-gri); cursor: not-allowed; }
+
+.lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border-top: var(--linie) solid var(--c-gri);
+}
+
+.rand {
+  width: 100%;
+  min-height: var(--t46);
+  display: grid;
+  grid-template-columns: var(--t46) minmax(0, 1fr) max-content;
+  gap: var(--t12);
+  align-items: start;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: var(--c-alb);
+  border: 0;
+  border-bottom: var(--linie) solid var(--c-g5);
+  border-left: var(--t7) solid transparent;
+  padding: var(--t12);
+  cursor: pointer;
+}
+
+.rand:hover,
+.rand.is-highlighted { background: var(--c-g6); }
+
+.rand:focus-visible { outline-offset: calc(var(--contur-focus) * -1); }
+
+.rand[aria-pressed="true"] {
+  background: var(--c-panou);
+  border-left-color: var(--c-portocaliu);
+}
+
+.poz {
+  font-family: var(--f-titlu);
+  font-stretch: condensed;
+  font-weight: 700;
+  font-size: var(--t18);
+  line-height: var(--lh-titlu);
+}
+
+/* Cantitatea: cifră în coloană, aliniată la dreapta. */
+.buc {
+  text-align: right;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.nume { display: block; font-weight: 700; }
+.meta { display: block; font-size: var(--t12); color: var(--c-gri); }
+
+.uzura {
+  display: inline-block;
+  margin-top: var(--t7);
+  font-size: var(--t12);
+  font-weight: 700;
+  color: var(--c-portocaliu-text);
+}
+
+.viewer-error,
+.boot-error {
+  margin: 0;
+  padding: var(--t18);
+  background: var(--c-panou);
+  border-left: var(--t7) solid var(--c-portocaliu);
+}
+
+.boot-error { margin: var(--t18) var(--t22) 0; }
+
+@media (max-width: 900px) {
+  .spatiu { grid-template-columns: minmax(0, 1fr); }
+  .panou-piese { max-height: none; }
+  .fisa { grid-template-columns: minmax(0, 1fr); }
+  .titlu { font-size: var(--t38); }
+  /* Pe telefon vederea 3D e principalul lucru: mai înaltă, ca markerii (ținte de 46 px) să încapă distanțați. */
+  .viewer { height: calc(var(--t136) * 4); }
+}

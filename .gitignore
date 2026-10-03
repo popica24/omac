@@ -1,0 +1,14 @@
+# Materialele clientului rămân doar local (caiet de sarcini, manual, fotografii, foi de fabrică).
+docs/*.pdf
+proof-of-concepts/**/assets/
+
+# Generate / locale
+node_modules/
+screenshots/
+.superpowers/
+.DS_Store
+
+# Uneltele locale ale editorului / agentului
+.claude/
+.agents/
+skills-lock.json
